@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>이미지 업로드 및 분석하기</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #image-container {
+            display: none;
+            margin-top: 20px; /* 이미지와 버튼 사이 간격 조절 */
+        }
+        #image-preview {
+            max-width: 100%;
+        }
+        #upload-button {
+            display: none;
+        }
+        #custom-upload-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+        }
+        #analyze-button {
+            display: none;
+            padding: 10px 20px;
+            background-color: #28A745;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>이미지 업로드 및 분석하기</h1>
+        <label for="upload-button" id="custom-upload-button">이곳을 눌러 파일을 업로드 하기</label>
+        <input type="file" id="upload-button" accept="image/*">
+        <div id="image-container">
+            <span id="image-name"></span>
+            <br>
+            <img id="image-preview" src="" alt="Uploaded Image">
+            <button id="analyze-button" onclick="analyzeImage()">분석하기</button>
+            <p id="result-text"></p>
+        </div>
+    </div>
+
+    <script>
+        const uploadButton = document.getElementById("upload-button");
+        const imageContainer = document.getElementById("image-container");
+        const imagePreview = document.getElementById("image-preview");
+        const imageName = document.getElementById("image-name");
+        const analyzeButton = document.getElementById("analyze-button");
+        const resultText = document.getElementById("result-text");
+
+        uploadButton.addEventListener("change", function () {
+            const file = uploadButton.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imageContainer.style.display = "block";
+                    analyzeButton.style.display = "block";
+                    imageName.textContent = "파일 이름: " + file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function analyzeImage() {
+            // 이미지 분석을 수행하는 코드 (모델에 따라 다름)
+            // 결과를 resultText에 표시
+            resultText.textContent = "이미지 분석 결과: 분석 중...";
+        }
+    </script>
+</body>
+</html>
